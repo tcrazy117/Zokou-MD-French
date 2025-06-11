@@ -1,0 +1,43 @@
+nom : Node.js CI
+
+sur:
+  pousser:
+    succursales:
+      - principal
+  pull_request:
+    succursales:
+      - principal
+  calendrier:
+    - cron : '0 */4 * * *'
+
+emplois:
+  construire:
+
+    fonctionne sur : ubuntu-latest
+
+    stratégie:
+      matrice:
+        version du nœud : [20.x]
+
+    mesures:
+    - nom : dépôt de paiement
+      utilisations : actions/checkout@v3
+
+    - nom : Configurer Node.js
+      utilisations : actions/setup-node@v3
+      avec:
+        version-nœud : ${{ matrix.node-version }}
+
+    - nom : Installer ffmpeg
+      courir: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    - nom : Installer les dépendances
+      courir: |
+        npm install -g pm2
+        installation npm
+
+    - nom : démarrer l'application avec délai d'attente
+      courir: |
+        délai d'attente 14520s npm run zokou
